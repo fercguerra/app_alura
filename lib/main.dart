@@ -18,7 +18,8 @@ class MyApp extends StatelessWidget {
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Tarefas'),
+          leading: Container(),
+          title: const Text('Tarefas'),
         ),
         body: ListView(
           children: [
@@ -78,7 +79,7 @@ class _TaskState extends State<Task> {
                         width: 200,
                         child: Text(
                           widget.nome,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 24,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -92,7 +93,19 @@ class _TaskState extends State<Task> {
 
                             print(nivel);
                           },
-                          child: Icon(Icons.arrow_drop_up)),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              const Icon(Icons.arrow_drop_up),
+                              Text(
+                                'Level Up',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                ),
+                              )
+                            ],
+                          )),
                     ],
                   ),
                 ),
@@ -114,15 +127,15 @@ class _TaskState extends State<Task> {
                       ],
                     ),
                     Padding(
-                      padding: EdgeInsets.all(12),
+                      padding: const EdgeInsets.all(12),
                       child: Text(
                         'Nivel: $nivel',
-                        style: TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white),
                       ),
                     ),
                   ],
                 ),
-                LinearProgressIndicator(),
+                const LinearProgressIndicator(),
               ],
             ),
           ],
