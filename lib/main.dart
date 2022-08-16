@@ -23,16 +23,24 @@ class MyApp extends StatelessWidget {
         ),
         body: ListView(
           children: [
-            const Task('Aprender Flutter',
-                'https://pbs.twimg.com/media/Eu7m692XIAEvxxP?format=png&name=large'),
-            const Task('Andar de Bike',
-                'https://tswbike.com/wp-content/uploads/2020/09/108034687_626160478000800_2490880540739582681_n-e1600200953343.jpg'),
-            const Task('Meditar',
-                'https://manhattanmentalhealthcounseling.com/wp-content/uploads/2019/06/Top-5-Scientific-Findings-on-MeditationMindfulness-881x710.jpeg'),
-            const Task('Ler',
-                'https://thebogotapost.com/wp-content/uploads/2017/06/636052464065850579-137719760_flyer-image-1.jpg'),
+            const Task(
+                'Aprender Flutter',
+                'https://pbs.twimg.com/media/Eu7m692XIAEvxxP?format=png&name=large',
+                3),
+            const Task(
+                'Andar de Bike',
+                'https://tswbike.com/wp-content/uploads/2020/09/108034687_626160478000800_2490880540739582681_n-e1600200953343.jpg',
+                2),
+            const Task(
+                'Meditar',
+                'https://manhattanmentalhealthcounseling.com/wp-content/uploads/2019/06/Top-5-Scientific-Findings-on-MeditationMindfulness-881x710.jpeg',
+                5),
+            const Task(
+                'Ler',
+                'https://thebogotapost.com/wp-content/uploads/2017/06/636052464065850579-137719760_flyer-image-1.jpg',
+                4),
             const Task('Jogar',
-                'https://i.ibb.co/tB29PZB/kako-epifania-2022-2-c-pia.jpg'),
+                'https://i.ibb.co/tB29PZB/kako-epifania-2022-2-c-pia.jpg', 1),
           ],
         ),
         floatingActionButton: FloatingActionButton(
@@ -46,7 +54,9 @@ class MyApp extends StatelessWidget {
 class Task extends StatefulWidget {
   final String nome;
   final String foto;
-  const Task(this.nome, this.foto, {Key? key}) : super(key: key);
+  final int dificuldade;
+  const Task(this.nome, this.foto, this.dificuldade, {Key? key})
+      : super(key: key);
 
   @override
   State<Task> createState() => _TaskState();
@@ -62,24 +72,34 @@ class _TaskState extends State<Task> {
         child: Stack(
           children: [
             Container(
-              color: Colors.blue,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4), color: Colors.blue),
               height: 140,
             ),
             Column(
               children: [
                 Container(
-                  color: Colors.white,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4),
+                    color: Colors.white,
+                  ),
                   height: 100,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
-                        color: Colors.black26,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4),
+                          color: Colors.black26,
+                        ),
                         width: 72,
                         height: 100,
-                        child: Image.network(
-                          widget.foto,
-                          fit: BoxFit.cover,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(4),
+                          child: Image.network(
+                            widget.foto,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                       Column(
@@ -98,30 +118,44 @@ class _TaskState extends State<Task> {
                           ),
                           Row(
                             children: [
-                              Icon(
-                                Icons.star,
-                                size: 15,
-                                color: Colors.blue,
-                              ),
-                              Icon(
-                                Icons.star,
-                                size: 15,
-                                color: Colors.blue,
-                              ),
-                              Icon(
-                                Icons.star,
-                                size: 15,
-                                color: Colors.blue,
-                              ),
-                              Icon(
-                                Icons.star,
-                                size: 15,
-                                color: Colors.blue[100],
-                              ),
-                              Icon(
-                                Icons.star,
-                                size: 15,
-                                color: Colors.blue[100],
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.star,
+                                    size: 15,
+                                    color: (widget.dificuldade >= 1)
+                                        ? Colors.blue
+                                        : Colors.blue[100],
+                                  ),
+                                  Icon(
+                                    Icons.star,
+                                    size: 15,
+                                    color: (widget.dificuldade >= 2)
+                                        ? Colors.blue
+                                        : Colors.blue[100],
+                                  ),
+                                  Icon(
+                                    Icons.star,
+                                    size: 15,
+                                    color: (widget.dificuldade >= 3)
+                                        ? Colors.blue
+                                        : Colors.blue[100],
+                                  ),
+                                  Icon(
+                                    Icons.star,
+                                    size: 15,
+                                    color: (widget.dificuldade >= 4)
+                                        ? Colors.blue
+                                        : Colors.blue[100],
+                                  ),
+                                  Icon(
+                                    Icons.star,
+                                    size: 15,
+                                    color: (widget.dificuldade >= 5)
+                                        ? Colors.blue
+                                        : Colors.blue[100],
+                                  ),
+                                ],
                               ),
                             ],
                           ),
@@ -161,7 +195,9 @@ class _TaskState extends State<Task> {
                           child: Container(
                             child: LinearProgressIndicator(
                               color: Colors.white,
-                              value: nivel / 10,
+                              value: (widget.dificuldade > 0)
+                                  ? (nivel / widget.dificuldade) / 10
+                                  : 1,
                             ),
                             width: 200,
                           ),
@@ -177,7 +213,11 @@ class _TaskState extends State<Task> {
                     ),
                   ],
                 ),
-                const LinearProgressIndicator(),
+                LinearProgressIndicator(
+                  value: (widget.dificuldade > 0)
+                      ? (nivel / widget.dificuldade) / 10
+                      : 1,
+                ),
               ],
             ),
           ],
