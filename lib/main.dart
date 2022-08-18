@@ -29,31 +29,22 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Tarefas'),
         ),
         body: AnimatedOpacity(
-          opacity: opacidade ? 1 : 0,
-          duration: Duration(milliseconds: 5000),
-          child: ListView(
-            children: [
-              const Task(
-                  'Aprender Flutter',
-                  'https://pbs.twimg.com/media/Eu7m692XIAEvxxP?format=png&name=large',
-                  3),
-              const Task(
-                  'Andar de Bike',
-                  'https://tswbike.com/wp-content/uploads/2020/09/108034687_626160478000800_2490880540739582681_n-e1600200953343.jpg',
-                  2),
-              const Task(
-                  'Meditar',
-                  'https://manhattanmentalhealthcounseling.com/wp-content/uploads/2019/06/Top-5-Scientific-Findings-on-MeditationMindfulness-881x710.jpeg',
-                  5),
-              const Task(
-                  'Ler',
-                  'https://thebogotapost.com/wp-content/uploads/2017/06/636052464065850579-137719760_flyer-image-1.jpg',
-                  4),
-              const Task('Jogar',
-                  'https://i.ibb.co/tB29PZB/kako-epifania-2022-2-c-pia.jpg', 1),
-            ],
-          ),
-        ),
+            opacity: opacidade ? 1 : 0,
+            duration: Duration(milliseconds: 5000),
+            //Trecho de código suprimido
+
+            child: ListView(
+              children: const [
+                Task('Aprender Flutter', 'assets/images/dash.png', 3),
+                Task('Andar de Bike', 'assets/images/bike.webp', 2),
+                Task('Meditar', 'assets/images/meditar.jpeg', 5),
+                Task('Ler', 'assets/images/livro.jpg', 4),
+                Task('Jogar', 'assets/images/jogar.jpg', 1),
+                SizedBox(
+                  height: 80,
+                )
+              ],
+            )),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             setState(() {
@@ -112,7 +103,7 @@ class _TaskState extends State<Task> {
                         height: 100,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(4),
-                          child: Image.network(
+                          child: Image.asset(
                             widget.foto,
                             fit: BoxFit.cover,
                           ),
