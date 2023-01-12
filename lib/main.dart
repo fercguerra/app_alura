@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'screens/form_screen.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -23,7 +25,13 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Scaffold(
+      home: FormScreen(),
+    );
+  }
+}
+
+
+       /*Scaffold(
         appBar: AppBar(
           leading: Container(),
           title: const Text('Tarefas'),
@@ -233,3 +241,4 @@ class _TaskState extends State<Task> {
     );
   }
 }
+*/
