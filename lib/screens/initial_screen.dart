@@ -36,13 +36,18 @@ class _InitialScreenState extends State<InitialScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
+            //empurrar uma nova tela
             context,
             MaterialPageRoute(
+              //constrói uma nova tela
               builder: (context) => FormScreen(),
             ),
           );
         },
-        child: const Icon(Icons.add),
+        child: const Icon(
+          Icons.arrow_forward,
+          color: Colors.black,
+        ),
       ),
     );
   }
