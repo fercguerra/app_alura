@@ -15,7 +15,10 @@ class _InitialScreenState extends State<InitialScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: Container(),
-        title: const Text('Tarefas'),
+        title: const Text(
+          'Tarefas',
+          style: TextStyle(color: Colors.black),
+        ),
       ),
       body: ListView(
         children: TaskInherited.of(context).taskList,

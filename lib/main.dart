@@ -15,9 +15,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Aplicativos de Tarefas',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.indigo,
       ),
-      home: TaskInherited(child: const InitialScreen(),),
+      home: TaskInherited(
+        child: const InitialScreen(),
+      ),
     );
   }
 }
