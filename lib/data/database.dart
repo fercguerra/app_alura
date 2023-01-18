@@ -14,7 +14,19 @@ Future<Database> getDatabase() async {
 
   return openDatabase(
     path,
-    onCreate: (db, version) => {db.execute(tabela)},
+    onCreate: (db, version) {
+      db.execute(tableSQL);
+    },
     version: 1,
   );
 }
+
+const String tableSQL = 'CREATE TABLE $_tablename('
+    '$_name TEXT,'
+    '$_difficulty INTEGER, '
+    '$_image TEXT)';
+
+const String _tablename = 'taskTable';
+const String _difficulty = 'dificuldade';
+const String _name = 'nome';
+const String _image = 'imagem';
