@@ -1,4 +1,5 @@
 import 'package:app_alura/data/database.dart';
+import 'package:sqflite/sqflite.dart';
 
 import '../components/task.dart';
 
@@ -14,41 +15,41 @@ class TaskDao {
   static String _image = 'imagem';
 
   save(Task tarefa) async {}
+
   Future<List<Task>> findAll() async {
-    print('Estamos acessando o findAll: ');
-    final Database dancoDeDados = await getDatabase();
+    print('Acessando o findAll: ');
+    final Database bancoDeDados = await getDatabase();
     final List<Map<String, dynamic>> result =
         await bancoDeDados.query(_tablename);
-
-    //objetos do tipo mapa
-    print('Procurando dados no Banco de dados... encontrado: &result');
-    return toList(result); //lista de objetos
+    print('Procurando dados no banco de dados... encontrado: $result');
+    return toList(result);
   }
 
-  List<Task> toList(List<Map<String, dynamic>> MapadeTarefas) {
-    print('Convertendo to List');
+  List<Task> toList(List<Map<String, dynamic>> mapaDeTarefas) {
+    print('Convertendo to List:');
     final List<Task> tarefas = [];
-    for (Map<String, dynamic> Linha in MapadeTarefas) //verificar cada linha
-    {
-      final Task tarefa = Task(linha[_name], linha[_image], linha[_difficulty]);
-
+    for (Map<String, dynamic> linha in mapaDeTarefas) {
+      final Task tarefa = Task(
+        linha[_name],
+        linha[_image],
+        linha[_difficulty],
+      );
       tarefas.add(tarefa);
     }
-    print('Lista de Tarefas $tarefas');
+    print('Lista de Tarefas: ${tarefas.toString()}');
     return tarefas;
   }
-}
 
-Future<List<Task>> find(String nomeDaTarefa) async {
-  print('Acessando find: ');
-  final Database bandoDeDados = await getDatabase(
-  final Lis<Map<String, dynamic>> result = await bancoDeDados.query(
-    _tablename, 
-    where: '$_name = ?',
-     whereArgs: [nomeDaTarefa],);
-  );
-  print('Tarefa encontrada: ${toList(result)}');
-  return toList(result);
-}
+  Future<List<Task>> find(String nomeDaTarefa) async {
+    print('Acessando find: ');
+    final Database bancoDeDados = await getDatabase();
+    print('Procurando tarefa com o nome: ${nomeDaTarefa}');
+    final List<Map<String, dynamic>> result = await bancoDeDados
+        .query(_tablename, where: '$_name = ?', whereArgs: [nomeDaTarefa]);
+    print('Tarefa encontrada: ${toList(result)}');
 
-delete(String nomeDaTarefa) async {}
+    return toList(result);
+  }
+
+  delete(String nomeDaTarefa) async {}
+}
