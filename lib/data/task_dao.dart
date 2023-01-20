@@ -22,9 +22,22 @@ class TaskDao {
 
     //objetos do tipo mapa
     print('Procurando dados no Banco de dados... encontrado: &result');
-    return toList();
+    return toList(result); //lista de objetos
   }
 
-  Future<List<Task>> find(String nomeDaTarefa) async {}
-  delete(String nomeDaTarefa) async {}
+  List<Task> toList(List<Map<String, dynamic>> MapadeTarefas) {
+    print('Convertendo to List');
+    final List<Task> tarefas = [];
+    for (Map<String, dynamic> Linha in MapadeTarefas) //verificar cada linha
+    {
+      final Task tarefa = Task(linha[_name], linha[_image], linha[_difficulty]);
+
+      tarefas.add(tarefa);
+    }
+    print('Lista de Tarefas $tarefas');
+    return tarefas;
+  }
 }
+
+Future<List<Task>> find(String nomeDaTarefa) async {}
+delete(String nomeDaTarefa) async {}
