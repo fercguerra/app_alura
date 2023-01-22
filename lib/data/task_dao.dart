@@ -14,7 +14,23 @@ class TaskDao {
   static String _name = 'nome';
   static String _image = 'imagem';
 
-  save(Task tarefa) async {}
+  save(Task tarefa) async {
+    print('Iniciando o save: ');
+    final Database bancoDeDados = await getDatabase();
+    var itemExisists = await find(tarefa.nome);
+    if (itemExisists.isEmpty) {
+      print('A tarefa não existia. ');
+      return await bancoDeDados.insert(_tablename, values);
+    } else {
+      print('A tarefa já existia!');
+      return await bancoDeDados.update(
+        _tablename,
+        values,
+        where: '$_name = ?',
+        whereArgs: [tarefa.nome],
+      );
+    }
+  }
 
   Future<List<Task>> findAll() async {
     print('Acessando o findAll: ');
