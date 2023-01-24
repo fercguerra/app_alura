@@ -1,4 +1,5 @@
-import 'package:app_alura/data/task_inherited.dart';
+import 'package:app_alura/data/task_dao.dart';
+import 'package:app_alura/components/task.dart';
 import 'package:flutter/material.dart';
 import 'package:app_alura/screens/form_screen.dart';
 
@@ -20,9 +21,73 @@ class _InitialScreenState extends State<InitialScreen> {
           style: TextStyle(color: Colors.black),
         ),
       ),
-      body: ListView(
-        children: TaskInherited.of(context).taskList,
-        padding: EdgeInsets.only(top: 8, bottom: 70),
+       body: Padding(
+        padding: const EdgeInsets.only(top: 8, bottom: 70),
+        child: FutureBuilder<List<Task>>(
+            future: TaskDao().findAll(),
+            builder: (context, snapshot) {
+              List<Task>? items = snapshot.data;
+              switch (snapshot.connectionState) {
+                case ConnectionState.none:
+                  return Center(
+                    child: Column(
+                      children: const [
+                        CircularProgressIndicator(),
+                        Text('Carregando'),
+                      ],
+                    ),
+                  );
+
+                case ConnectionState.waiting:
+                  return Center(
+                    child: Column(
+                      children: const [
+                        CircularProgressIndicator(),
+                        Text('Carregando'),
+                      ],
+                    ),
+                  );
+                case ConnectionState.active:
+                  return Center(
+                    child: Column(
+                      children: const [
+                        CircularProgressIndicator(),
+                        Text('Carregando'),
+                      ],
+                    ),
+                  );
+                case ConnectionState.done:
+                  if (snapshot.hasData && items != null) {
+                    if (items.isNotEmpty) {
+                      return ListView.builder(
+                          itemCount: items.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            final Task tarefa = items[index];
+                            return tarefa;
+                          });
+                    }
+                    return Center(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      // não implementado em vídeo por descuido meu, desculpem.
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      // essa linha de layout deixa o conteudo totalmente centralizado.
+                      children: const [
+                        Icon(
+                          Icons.error_outline,
+                          size: 128,
+                        ),
+                        Text(
+                          'Não há nenhuma Tarefa',
+                          style: TextStyle(fontSize: 32),
+                        ),
+                      ],
+                    ));
+                  }
+                  return const Text('Erro ao carregar tarefas');
+              }
+              return const Text('Erro desconhecido');
+            }),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -33,7 +98,9 @@ class _InitialScreenState extends State<InitialScreen> {
                 taskContext: context,
               ),
             ),
-          );
+          ).then((value) => setState(() {
+                print('Recarregando a tela inicial');
+              }));
         },
         child: const Icon(Icons.add),
       ),
