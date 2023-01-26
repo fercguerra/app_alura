@@ -1,3 +1,5 @@
+import 'package:app_alura/components/task.dart';
+import 'package:app_alura/data/task_dao.dart';
 import 'package:flutter/material.dart';
 
 class FormScreen extends StatefulWidget {
@@ -139,9 +141,8 @@ class _FormScreenState extends State<FormScreen> {
                   ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        print(nameController.text);
-                        print(difficultyController.text);
-                        print(imageController.text);
+                        TaskDao().save(Task(nameController.text, imageController.text, int.parse(difficultyController.text)));
+                        
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text('Printando nova Tarefa'),

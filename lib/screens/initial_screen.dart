@@ -86,7 +86,7 @@ class _InitialScreenState extends State<InitialScreen> {
                   }
                   return const Text('Erro ao carregar tarefas');
               }
-              return const Text('Erro desconhecido');
+            
             }),
       ),
       floatingActionButton: FloatingActionButton(
